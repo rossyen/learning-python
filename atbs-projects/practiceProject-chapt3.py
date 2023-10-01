@@ -16,17 +16,28 @@
 # Coded with help on the internet after many failed attempts. 
 
 def collatz(number):
+    
+        if number % 2 == 0:
+            print(number // 2)
+            return number // 2
+    
+        elif number % 2 == 1:
+            result = 3 * number + 1
+            print(result)
+            return result
 
-    if number % 2 == 0:
-        print(number // 2)
-        return number // 2
-    
-    elif number % 2 == 1:
-        result = 3 * number + 1
-        print(result)
-        return result
-    
-n = input('Give me a number to se the Collatz Sequence: ')
+
+n = input('Give me a number to se the Collatz Sequence: ') # Code starts here
+
+#If number is not 1 it goes into function collatz()
+
 while n != 1:
-    n = collatz(int(n))
-# this program fails if input is not an integer
+    try:
+        n = collatz(int(n))
+    except ValueError:
+        print('Error: You must enter a positive integer to see the Collatz Sequence...') #prints this infinitely 
+        n = input('Enter a positive integer: ') # makes the user add input if they add a string instead of an integer to first input. 
+         
+         
+         
+
