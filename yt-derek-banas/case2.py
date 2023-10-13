@@ -1,3 +1,4 @@
+# Case nr 2:
 # If age is 5 Go to Kindergarten
 # Ages 6 trough 17 goes to grades 1 trough 12
 # If age is greater then 17 say go to college
