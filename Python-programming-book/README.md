@@ -1,0 +1,1 @@
+This folder contains programs written while reading and following trough the book: Python programming: an introduction to computer science. 3rd edition05
