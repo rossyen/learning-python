@@ -1,0 +1,10 @@
+# a Python 'for loop' has this general form:
+''' for <var> in <sequence>:
+    <body> 
+'''
+
+for i in [0, 1, 2, 3]:
+    print(i, end='    ')
+
+for odd in [1, 3, 5, 7, 9]:
+    print (odd * odd, end='    ')
