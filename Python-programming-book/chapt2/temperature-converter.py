@@ -8,3 +8,5 @@ def main():
     print('The temperature is {} degrees Fahrenheit.'.format(fahrenheit))
 
 main()
+
+input('Press <Enter> key to quit.')
