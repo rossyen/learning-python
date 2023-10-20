@@ -3,27 +3,27 @@
 
 # Print welcome message
 def main():
-    print('This is a program that prints out invested sum and compound interest over a fixed period')
-# Get input on fixed investment amount
-    f_inv = int(input('How much do you want to save annually: '))
-
+    print('This is a program that prints out invested sum with contributing saving and compound interest over a fixed period')
+# Get input on starting amount on savings
+    principal = int(input('Enter initial savings: '))
+    
 # Get interest rate
-    i_rate = float(input('What interest rate do you expect: '))
+    rate = float(input('What interest rate do you expect: '))
 
 # Get input on how many years to save
-    n = int(input('How many years are you planning to save: '))
+    t = int(input('How many years are you planning to save: '))
 
-    amount = f_inv
+    n = 1 # Determines compounding frequency in formula
+
+# Get input on contributing saving fro user:
+    contributing = int(input('How much would you like to save each year? '))
+
+
 # print amount saved on fixed investment over 'x' times years
     
-    # loop for compound interest
-    for i in range(n):
-        f_inv = (f_inv * (1 + i_rate/100)) + amount
-    f_sum = f_inv - amount
-
-    # loop for value and compound interest 
-    
-    print(f'Earning you {f_sum} over {n} years')
+    A = (principal * (1 + rate/n)**(n*t)) + (contributing * (((1 + rate/n)**(n*t)) -1) / (rate/n))
+        
+    print(f'Earning you {A:.2f} over {t} years')
 
 main()
 
@@ -35,4 +35,27 @@ main()
     CI = amount - principal
 
     This program shows only compound interest after 'time'
+'''
+
+
+''' 
+Definitions: 
+A= is the final value of the account after interest is calculated
+P= principal 
+r= annual interest rate
+n= compounding frequency
+t= time period in years
+PMT= 'PMT stands for payment' and in the formula it is the contributions place
+
+Compound interest formula:
+
+A = P * (1 + r/n)**(n*t)
+
+Compound interest with regular contributions: Note this formula only
+works if the payment frequency and compounding frequency are the same.
+For example, if you make monthly contributions, and the interest compounds
+quarterly, this formula will not be accurate. 
+
+A = (P * (1 + r/n)**(n*t)) + ((PMT * ((1 + r/n)**(n*t) -1)) / (r/n))
+
 '''
