@@ -4,7 +4,7 @@
 
 import math
 
-def volume_area_sphere()
+def volume_area_sphere():
 
 #   Print a welcoming message to user
     print('This is a program that shows you both the volume and area of a sphere')
@@ -16,6 +16,10 @@ def volume_area_sphere()
     volume = 4 / 3 * math.pi * radius**3
 
 #   Calculate area
+    area = 4 * math.pi * radius**2
 
 #   Print results
+    print(f'The volume is {volume:.2f} and the area is {area:.2f} for a sphere with radius of {radius}.')
+
+volume_area_sphere()
 
