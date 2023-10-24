@@ -8,8 +8,8 @@ import math
 def ladder_height():
     height = float(input('Enter height of ladder: '))
     angle = float(input('Enter angle of ladder: '))
-
-    length = height / math.sin(angle)
+    radians = (math.pi/180) * angle
+    length = height / math.sin(radians)
 
     print(f'The required length of ladder is {length:.2f}')
 
