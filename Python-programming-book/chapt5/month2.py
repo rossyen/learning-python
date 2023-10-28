@@ -10,7 +10,7 @@ def main():
     
     n =int(input('Enter a month number (1-12): '))
     print()
-    
+
     print('The month abbreviation is', months[n-1] + '. \n')
 
 main()    
