@@ -1,14 +1,16 @@
 # userfile.py
 #   Program to create a file of usernames in batch mode
 
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+
 def main():
     print('This program creates a file of usernames from a')
     print('file of names')
 
     # get the file name
 
-    infileName = input('What file are the names in? ')
-    outfileName = input('What file should the usernames go in? ')
+    infileName = askopenfilename()
+    outfileName = asksaveasfilename()
 
     # open the files
 
