@@ -14,10 +14,13 @@ def loop():
 def main():
     
     name = input('Enter a name: ')
-    namesplit = name.split(' ')
+    
+    ''' namesplit = name.split(' ')
     fullnamelist = [word[:] for word in namesplit]
     fullname = ''.join(fullnamelist)
-    print(fullname)
+    print(fullname) '''
+    # shorter code than the one commented out 
+    fullname = ''.join(name.split())
 
     total = 0
     for letter in fullname:
