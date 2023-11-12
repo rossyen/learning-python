@@ -10,6 +10,11 @@ def distance(p1, p2):
                      + square(p2.getY() - p1.getY()))
     return dist
 
+def areaTriangle(a, b, c):
+    s = (a+b+c)/2
+    area = math.sqrt(s*(s-a)*(s-b)*(s-c))
+    return area
+
 def main():
     win = GraphWin("Draw a Triangle")
     win.setCoords(0.0, 0.0, 10.0, 10.0)
@@ -32,8 +37,12 @@ def main():
     triangle.draw(win)
 
     # Calculate the perimeter of the triangle
-    perim = distance(p1,p2) + distance(p2,p3) + distance(p3,p1)
-    message.setText(f"The perimeter is: {perim:.2f}")
+    # perim = distance(p1,p2) + distance(p2,p3) + distance(p3,p1)
+    # message.setText(f"The perimeter is: {perim:.2f}")
+    
+    # Call for area of triangle:
+    area = areaTriangle(distance(p1,p2), distance(p2,p3), distance(p3,p1))
+    message.setText(f"The area is: {area:.2f}")
 
     # Wait for another click to exit
     win.getMouse()
