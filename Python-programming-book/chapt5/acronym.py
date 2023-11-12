@@ -16,16 +16,16 @@ def loop():
     else:
         exit
 
-def main():
-
-    # get input from user
-
-    phrase = str(input('Enter a phrase to make it an acronym: \n'))
-    
+# Receives phrase and returns acronym to function call in lowercase
+def acronym(phrase):
     acronym = phrase.split()
     first_letters = [word[0] for word in acronym]
     first_letters_str = ''.join(first_letters)
+    return first_letters_str
 
-    print(first_letters_str.upper())
+def main():
+
+    phrase = str(input('Enter a phrase to make it an acronym: \n'))
+    print(acronym(phrase).upper())
     loop()     
 main()
