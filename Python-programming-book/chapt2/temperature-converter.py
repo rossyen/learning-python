@@ -28,7 +28,8 @@ def main():
             print(9.0/5.0 * int(x) + 32)
 '''
 
-main()
+if __name__ == '__main__':
+    main()
 
 
 
