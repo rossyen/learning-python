@@ -30,7 +30,7 @@ def main():
         year = int(input("Which year would you like to see the date of Easter? "))
         a = year % 19
         b = year % 4
-        c = year & 7
+        c = year % 7
         d = (19*a + 24) % 30
         e = (2*b + 4*c + 6*d + 5) % 7
         easter = 22 + d + e
@@ -49,8 +49,6 @@ def main():
                 print("Neat")       
     except ValueError:
         print("Please enter a year between the year 1982 and 2048")
-
-
 
 
     loop()  
