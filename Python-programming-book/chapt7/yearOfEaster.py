@@ -1,5 +1,5 @@
 # yearOfEaster.py
-# Computes the date of easter in the years 1982-2048
+# Computes the date of easter in the years 1900-2099
 
 # Formula to get the date of easter:
 # a = year % 19
@@ -10,7 +10,7 @@
 # Date of Easter is March 22 + d + e (Date can be in april)
 
 # Receive year from user
-# determine if year is in range of 1982-2048
+# determine if year is in range of 1900-2099
 # Use formula in code to calculate date
 # determine if date is in march or april
 # print result to user
@@ -26,7 +26,7 @@ def loop():
 def main():
 
     try:
-        print("This program lets you see the date of Easter in the years between 1982-2048\n")
+        print("This program lets you see the date of Easter in the years between 1900-2099\n")
         year = int(input("Which year would you like to see the date of Easter? "))
         a = year % 19
         b = year % 4
@@ -35,20 +35,27 @@ def main():
         e = (2*b + 4*c + 6*d + 5) % 7
         easter = 22 + d + e
         
-        if year < 1982:
-            print("Please enter a year between 1982 and 2048.")
-        elif year > 2048:
-            print("Please enter a year between 1982 and 2048.")
+        if 1900 <= year >= 2099:
+            print("Please enter a year between 1900 and 2099.")
+        
         else:
-            if easter <= 31:
-                print(f"The date of easter is March {easter} in the year {year}")
-            elif easter > 31:
-                easter = easter - 31
-                print(f"The date of easter is April {easter} in the year {year}")
-            else:
-                print("Neat")       
+            if year == 1954 or year == 1981 or year == 2049 or year == 2076:
+                easter = easter - 7
+                if easter <= 31:
+                    print(f"The date of easter is March {easter} in the year {year}")
+                elif easter > 31:
+                    easter = easter - 31
+                    print(f"The date of easter is April {easter} in the year {year}") 
+
+            else:    
+                if easter <= 31:
+                    print(f"The date of easter is March {easter} in the year {year}")
+                elif easter > 31:
+                    easter = easter - 31
+                    print(f"The date of easter is April {easter} in the year {year}")
+                  
     except ValueError:
-        print("Please enter a year between the year 1982 and 2048")
+        print("Please enter a year between the year 1900 and 2099")
 
 
     loop()  
