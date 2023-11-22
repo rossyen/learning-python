@@ -25,6 +25,33 @@ def correctMonth(month):
         return True
     else: return False
 
+def leapYear(year):
+    def isCentury(year):
+        if year % 100 == 0:
+            return True
+        else:
+            return False
+    
+    def isDivisible400(year):
+        if year % 400 == 0:
+            return True
+        else:
+            return False
+    
+    def isDivisible4(year):
+        if year % 4 == 0:
+            return True
+        else:
+            return False
+
+    if isCentury(year) == True and isDivisible400(year) == True:
+        return True
+    elif isDivisible4(year) == True:
+        return True
+    else:
+        return False
+
+    
 
 def main():
 
@@ -32,6 +59,13 @@ def main():
     day = int(day)
     month = int(month)
     year = int(year)
+
+    if leapYear(year) == True:
+        day = day + leapYear(year)
+    elif leapYear(year) == False:
+        # work in progress. Added functions to see if leap year is true or not. Now to add inn loops to check for months and days in months. feb 28 or 29 etc.
+        
+
 
     if correctDay(day) == False:
         print("Invalid date.")
