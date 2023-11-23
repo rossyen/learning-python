@@ -62,9 +62,7 @@ def correspondingDayNumber(day, month, year):
         dayNum = dayNum - (4*(month)+23)//10
     if leapYear(year) == True and month > 2 and month <=12:
         dayNum = dayNum + 1
-        return(f"Corresponding day number is {dayNum}.")
-    else:
-        return(f"Corresponding day number is {dayNum}.")
+    return(f"Corresponding day number is {dayNum}.")
 
 
 def main():
