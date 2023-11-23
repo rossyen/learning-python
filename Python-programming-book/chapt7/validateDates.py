@@ -35,9 +35,6 @@ def leapYear(year):
         return False
 
 def validateDate(day, month, year):
-        day = int(day)
-        month = int(month)
-        year = int(year)
 
         if leapYear(year) == False:
             if day >= 1 and day <= 31 and month in [1, 3, 5, 7, 8, 10, 12]:
@@ -58,6 +55,20 @@ def validateDate(day, month, year):
             else:
                 return("Invalid date.")
 
+def correspondingDayNumber(day, month, year):
+    dayNum = 31*(month - 1) + day
+        
+    if month > 3 and month <= 12:
+        dayNum = dayNum - (4*(month)+23)//10
+        if leapYear(year) == True and month > 2 and month <=12:
+            dayNum = dayNum + 1
+            return(f"Corresponding day number is {dayNum}.")
+        else:
+            return(f"Corresponding day number is {dayNum}.")
+    else:
+        return(f"Corresponding day number is {dayNum}.")
+        
+
 def main():
     
     try:
@@ -66,28 +77,8 @@ def main():
         month = int(month)
         year = int(year)
         print(validateDate(day, month, year))
+        print(correspondingDayNumber(day, month, year))
 
-
-        # Prints corresponding day number in the year. 
-        dayNum = 31*(month - 1) + day
-        
-        if month > 3 and month <= 12:
-            dayNum = dayNum - (4*(month)+23)//10
-            if leapYear(year) == True and month > 2 and month <=12:
-                dayNum = dayNum + 1
-                print(f"Corresponding day number is {dayNum}.")
-            else:
-                print(f"Corresponding day number is {dayNum}.")
-        else:
-            print(f"Corresponding day number is {dayNum}.")
-            
-        
-        # Calculate the corresponding day number after validating the date
-        # three steps using int arithmetic: 
-        # dayNum = 31(month - 1) + day
-        # if month is after feb subtract (4(month)+23)//10
-        # if it's a leap year and after feb 29, add 1
-        
     except ValueError:
         print("Error!\nPlease enter a date in dd/mm/yyyy format.")
     
