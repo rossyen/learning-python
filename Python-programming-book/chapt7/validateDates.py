@@ -58,16 +58,14 @@ def validateDate(day, month, year):
 def correspondingDayNumber(day, month, year):
     dayNum = 31*(month - 1) + day
         
-    if month > 3 and month <= 12:
+    if month > 2 and month <= 12:
         dayNum = dayNum - (4*(month)+23)//10
-        if leapYear(year) == True and month > 2 and month <=12:
-            dayNum = dayNum + 1
-            return(f"Corresponding day number is {dayNum}.")
-        else:
-            return(f"Corresponding day number is {dayNum}.")
+    if leapYear(year) == True and month > 2 and month <=12:
+        dayNum = dayNum + 1
+        return(f"Corresponding day number is {dayNum}.")
     else:
         return(f"Corresponding day number is {dayNum}.")
-        
+
 
 def main():
     
