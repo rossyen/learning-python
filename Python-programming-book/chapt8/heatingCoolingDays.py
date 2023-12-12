@@ -9,20 +9,24 @@
 
 
 def main():
+    fileName = input('What file are the numbers in? ')
+    inFile = open(fileName, 'r')
 
     heatingDays = 0
     coolingDays = 0
-    while True:
-        temp = input("Enter temperature: (<Enter> to quit) >> ")
+
+    for line in inFile:
+        print(f'Current line: {line}')
+        temp = line.strip()
         if temp == "":
-            break
+            continue
 
         tempInt = int(temp)
         if tempInt < 60:
-            heatingDays = heatingDays + 1
+            heatingDays = heatingDays + 1 
         elif tempInt > 80:
             coolingDays = coolingDays + 1
 
     print(f"Number of cooling days: {coolingDays}\n Number of heating days: {heatingDays}")
-
+    inFile.close()
 main()
