@@ -12,6 +12,8 @@
 # check with bool if both strings are equal
 # print output if equal or not
 
+
+
 def wordReversal(sentence):
     sentence = sentence
     reversedSentence = sentence.split()
