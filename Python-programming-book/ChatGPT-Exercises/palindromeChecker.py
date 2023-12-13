@@ -34,14 +34,12 @@ def main():
     print("Example: The name Otto is spelled Otto backwards.\nThis program excludes spaces, commas, punctuation and uppercase letters.")
     print("So for example if you write: \"ex.t t, ttxe\" it will print out that \"ex.t t, ttxe\" is a Palindrome, since \"exttttxe\" is a Palindrome.\n")
     palindrome = str(input("Input: "))
-
-
-    
     
     # making letters into a list
     palindromeList = []
     for letter in stripString(palindrome):
         palindromeList.append(letter)
+    
     # if palindrome is even number split in two
     if len(palindromeList) % 2 == 0:
         evenList = len(palindromeList) // 2
