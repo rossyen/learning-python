@@ -30,6 +30,8 @@ def main():
         elif guess > 100:
             print("Enter a number between 1 and 100. This game will now restart.\n")
             main()
+
+        
         # I've commented the 3 places you need to change, when changing number of attempts in this game.
     
         while True:
