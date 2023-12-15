@@ -51,7 +51,6 @@ def main():
                 
         except ValueError:
             print("Enter a number to use the calculator.\n")
-            main()
         
         
 
