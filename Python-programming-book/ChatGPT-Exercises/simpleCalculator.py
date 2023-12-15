@@ -8,19 +8,19 @@
 # display the result
 
 
-def addition(n1, n2):
+def perform_addition(n1, n2):
     n3 = n1 + n2
     return n3
 
-def subtraction(n1, n2):
+def perform_subtraction(n1, n2):
     n3 = n1 - n2
     return n3
 
-def multiplication(n1, n2):
+def perform_multiplication(n1, n2):
     n3 = n1 * n2
     return n3
 
-def division(n1, n2):
+def perform_division(n1, n2):
     n3 = n1 / n2
     return n3
 
@@ -37,13 +37,13 @@ def main():
             
             if operator in ["+", "-", "*", "/"]:
                 if operator == "+":
-                    result = addition(n1, n2)
+                    result = perform_addition(n1, n2)
                 elif operator == "-":
-                    result = subtraction(n1, n2)
+                    result = perform_subtraction(n1, n2)
                 elif operator == "*":
-                    result = multiplication(n1, n2)
+                    result = perform_multiplication(n1, n2)
                 elif operator == "/":
-                    result = division(n1, n2)
+                    result = perform_division(n1, n2)
                 print(f"{n1} {operator} {n2} = {result}\n")
                 break
             else:
