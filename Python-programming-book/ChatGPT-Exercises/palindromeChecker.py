@@ -14,15 +14,15 @@
 
 
 
-def reverseString(string):
+def reverse_string(string):
     string = string[::-1]
     string = "".join(string) # string is receives as a list, thats why this is here
     return string
 
-def palindromeTest(one, two):
+def palindrome_test(one, two):
     return one == two
 
-def stripString(string):
+def strip_string(string):
     string = string.lower()
     strippedstring = string.replace(".", "")
     strippedstring = strippedstring.replace(",", "")
@@ -37,15 +37,15 @@ def main():
     
     # making letters into a list
     palindromeList = []
-    for letter in stripString(palindrome):
+    for letter in strip_string(palindrome):
         palindromeList.append(letter)
     
     # if palindrome is even number split in two
     if len(palindromeList) % 2 == 0:
         evenList = len(palindromeList) // 2
-        split = reverseString(palindromeList[0:evenList])
+        split = reverse_string(palindromeList[0:evenList])
         split2 = "".join(palindromeList[evenList:])
-        if palindromeTest(split, split2):
+        if palindrome_test(split, split2):
             print(f"{palindrome} is a Palindrome")
         else:
             print(f"{palindrome} is NOT a Palindrome")
@@ -53,9 +53,9 @@ def main():
     # if palindrome is uneven: separate the middle number and split rest in two 
     elif len(palindromeList) % 2 != 0:
         oddList = len(palindromeList) // 2
-        split = reverseString(palindromeList[0:oddList])
+        split = reverse_string(palindromeList[0:oddList])
         split2 = "".join(palindromeList[oddList + 1:])
-        if palindromeTest(split, split2):
+        if palindrome_test(split, split2):
             print(f"{palindrome} is a Palindrome")
         else:
             print(f"{palindrome} is NOT a Palindrome")
