@@ -52,14 +52,13 @@ def printIntro():
 
 def getInputs():
     # Returns the three simulation parameters probA, probB and n
-    a = float(input("What is the prob. player A wins a serve? "))
-    b = float(input("What is the prob. player B wins a serve? "))
-    n = int(input("How many games to simulate? "))
+    a = 0.65 #float(input("What is the prob. player A wins a serve? "))
+    b = 0.7 #float(input("What is the prob. player B wins a serve? "))
+    n = 500 #int(input("How many games to simulate? "))
     return a, b, n
 
 def gameOver(a, b):
     return a==15 or b==15
-
 
 def simOneGame(probA, probB):
     scoreA = 0
@@ -92,19 +91,52 @@ def simNGames(n, probA, probB):
             winsB = winsB + 1
     return winsA, winsB
 
-def printSummary(winsA, winsB):
+
+def simMultiGame(n, winsA, winsB):
+    # simulates n games and returns multiWinA and multiWinB
+    multiWinA = 0
+    multiWinB = 0
+    wins_required = 3
+    consecutive_winsA = 0
+    consecutive_winsB = 0
+
+    for i in range(n):
+        scoreA, scoreB = simOneGame(winsA, winsB)
+        if scoreA > scoreB:
+            consecutive_winsA = consecutive_winsA + 1
+            consecutive_winsB = 0
+            if consecutive_winsA == wins_required:
+                multiWinA = multiWinA + 1
+                consecutive_winsA = 0
+        elif scoreB > scoreA:
+            consecutive_winsB = consecutive_winsB + 1
+            consecutive_winsA = 0
+            if consecutive_winsB == wins_required:
+                multiWinB = multiWinB + 1
+                consecutive_winsB = 0
+    return multiWinA, multiWinB
+
+
+
+def printSummary(winsA, winsB, multiWinA, multiWinB):
     # Prints a summary of wins for each player.
     n = winsA + winsB
     print(f"\nGames simulated: {n}")
     print(f"Wins for A: {winsA} ({winsA/n:0.1%})")
     print(f"Wins for B: {winsB} ({winsB/n:0.1%})")
-    
+
+    print(f'3 wins in a row for A: {multiWinA}')
+    print(f'Possibility for 3 wins in a row for A: {multiWinA/n:0.1%}')
+    print(f'3 wins in a row for B: {multiWinB}')
+    print(f'Possibility for 3 wins in a row for A: {multiWinB/n:0.1%}')
+
 
 def main():
     printIntro()
     probA, probB, n = getInputs()
     winsA, winsB = simNGames (n, probA, probB)
-    printSummary(winsA, winsB)
+    multiWinA, multiWinB = simMultiGame(n, probA, probB)
+    printSummary(winsA, winsB, multiWinA, multiWinB)
 
 
 
