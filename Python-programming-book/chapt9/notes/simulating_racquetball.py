@@ -34,13 +34,6 @@ Wins for B: 232 (46.4%)
 ''' 
 
 
-# top-down design:
-
-# Print an Introduction
-# Get the inputs: probA, probB, n
-# Simulate n games of racquetball using probA and probB
-# Print a report on the wins for playerA and playerB
-
 from random import random
 
 def printIntro():
@@ -52,9 +45,9 @@ def printIntro():
 
 def getInputs():
     # Returns the three simulation parameters probA, probB and n
-    a = 0.65 #float(input("What is the prob. player A wins a serve? "))
-    b = 0.7 #float(input("What is the prob. player B wins a serve? "))
-    n = 500 #int(input("How many games to simulate? "))
+    a = 0.75 #float(input("What is the prob. player A wins a serve? "))
+    b = 0.75 #float(input("What is the prob. player B wins a serve? "))
+    n = 10 #int(input("How many games to simulate? "))
     return a, b, n
 
 def gameOver(a, b):
@@ -77,6 +70,24 @@ def simOneGame(probA, probB):
                 serving = "A"
     
     return scoreA, scoreB
+
+def simOneGameAlternate(firstServe, probA, probB):
+    # same as simOneGame but with serve alternating between player A and B on odd and even games with servicing.
+    scoreA = 0
+    scoreB = 0
+    serving = firstServe
+    while not gameOver(scoreA, scoreB):
+        if serving == "A":
+            if random() < probA:
+                scoreA = scoreA + 1
+            else:
+                serving = "B"
+        else:
+            if random() < probB:
+                scoreB = scoreB + 1
+            else:
+                serving = "A"
+    return scoreA, scoreB
     
 
 def simNGames(n, probA, probB):
@@ -91,6 +102,22 @@ def simNGames(n, probA, probB):
             winsB = winsB + 1
     return winsA, winsB
 
+def simNGamesAlternate(n, probA, probB):
+    # Simulates n games and returns winsA and winsB
+    winsA = 0
+    winsB = 0
+    
+    if n % 2 == 0:
+        firstServe = "A"
+    else:
+        firstServe = "B"
+    scoreA, scoreB = simOneGameAlternate(firstServe, probA, probB)
+    if scoreA > scoreB:
+        winsA = winsA + 1
+    elif scoreB > scoreA:
+        winsB = winsB + 1
+    
+    return winsA, winsB
 
 def simMultiGame(n, winsA, winsB):
     # simulates n games and returns multiWinA and multiWinB
@@ -117,8 +144,36 @@ def simMultiGame(n, winsA, winsB):
     return multiWinA, multiWinB
 
 
+'''
+best of n game matches.
+first service alternates, so player A servers first in odd games of the match, 
+and player B servers first in the even games.
 
-def printSummary(winsA, winsB, multiWinA, multiWinB):
+'''
+def simBestOfGames(n, winsA, winsB):
+    # simulates n games and returns winner as best of "n" games
+    winner = ""
+    wins_required = n//2+1
+    consecutive_winsA = 0
+    consecutive_winsB = 0
+
+    for i in range(n):
+        if i % 2 == 0:
+            evenOdd = 1
+        else:
+            evenOdd = 2
+        scoreA, scoreB = simNGamesAlternate(evenOdd, winsA, winsB)
+        if scoreA > scoreB:
+            consecutive_winsA = consecutive_winsA + 1
+            if consecutive_winsA == wins_required:
+                winner = "A"
+        elif scoreB > scoreA:
+            consecutive_winsB = consecutive_winsB + 1
+            if consecutive_winsB == wins_required:
+                winner = "B"
+    return winner
+
+def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfGames):
     # Prints a summary of wins for each player.
     n = winsA + winsB
     print(f"\nGames simulated: {n}")
@@ -130,13 +185,17 @@ def printSummary(winsA, winsB, multiWinA, multiWinB):
     print(f'3 wins in a row for B: {multiWinB}')
     print(f'Possibility for 3 wins in a row for A: {multiWinB/n:0.1%}')
 
+    print(f"Player {bestOfGames} wins best of {n} games with at least {n//2+1} games won.")
+
 
 def main():
     printIntro()
     probA, probB, n = getInputs()
     winsA, winsB = simNGames (n, probA, probB)
     multiWinA, multiWinB = simMultiGame(n, probA, probB)
-    printSummary(winsA, winsB, multiWinA, multiWinB)
+    bestOfGames = simBestOfGames(n, probA, probB)
+    
+    printSummary(winsA, winsB, multiWinA, multiWinB, bestOfGames)
 
 
 
