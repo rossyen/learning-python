@@ -47,7 +47,7 @@ def getInputs():
     # Returns the three simulation parameters probA, probB and n
     a = 0.65 #float(input("What is the prob. player A wins a serve? "))
     b = 0.70 #float(input("What is the prob. player B wins a serve? "))
-    n = 100 #int(input("How many games to simulate? "))
+    n = 1100 #int(input("How many games to simulate? "))
     return a, b, n
 
 def gameOver(a, b):
@@ -81,12 +81,21 @@ def simNGames(n, probA, probB):
     consecutive_winsB = 0
     multiwinA = 0
     multiwinB = 0
+    totalshutoutA = 0
+    totalshutoutB = 0
     if n % 2 == 0:
         firstServe = "A"
     else:
         firstServe = "B"
     for i in range(n):
         scoreA, scoreB = simOneGame(firstServe, probA, probB)
+        if scoreA == 0 or scoreB == 0:
+            shutoutA, shutoutB = shutout(scoreA, scoreB)
+            if shutoutA > 0:
+                totalshutoutA = totalshutoutA + 1
+            elif shutoutB > 0:
+                totalshutoutB = totalshutoutB + 1
+
         if scoreA > scoreB:
             winsA = winsA + 1
             consecutive_winsA = consecutive_winsA + 1
@@ -101,9 +110,18 @@ def simNGames(n, probA, probB):
             if consecutive_winsB == wins_requires:
                 multiwinB = multiwinB + 1
                 consecutive_winsB = 0
-    return winsA, winsB, multiwinA, multiwinB
+    return winsA, winsB, multiwinA, multiwinB, totalshutoutA, totalshutoutB
 
-
+def shutout(scoreA, scoreB):
+    a = 0
+    b = 0
+    if scoreB == 0:
+        a = a + 1 
+        return a, b
+    elif scoreA == 0:
+        b = b + 1
+        return a, b
+    
 def simBestOfGames(n, winsA, winsB):
     winsRequired = n/2 + 1
     if winsA >= winsRequired:
@@ -113,7 +131,7 @@ def simBestOfGames(n, winsA, winsB):
     else:
         return False
 
-def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames):
+def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames, shutoutA, shutoutB):
     # Prints a summary of wins for each player.
     n = winsA + winsB
     print(f"\nGames simulated: {n}")
@@ -121,22 +139,26 @@ def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames):
     print(f"Wins for B: {winsB} ({winsB/n:0.1%})\n")
 
     print(f'3 wins in a row for A: {multiWinA}')
-    print(f'Possibility for 3 wins in a row for A: {multiWinA/n:0.1%}')
+    print(f'Approximately possibility for 3 wins in a row for A: {multiWinA/n:0.1%}')
     print(f'3 wins in a row for B: {multiWinB}')
-    print(f'Possibility for 3 wins in a row for A: {multiWinB/n:0.1%}')
+    print(f'Approximately possibility for 3 wins in a row for A: {multiWinB/n:0.1%}')
     if bestOfNGames == False:
         pass
     else:
-        print(f"\nPlayer {bestOfNGames} wins best of {n} games with at least {n//2+1} games won.")
+        print(f"\nPlayer {bestOfNGames} wins best of {n} games with at least {n//2+1} games won")
+
+
+    print(f"\nPlayer A won a total of: {shutoutA} shutouts ({shutoutA/n:0.1%} of all games).")
+    print(f"Player B won a total of: {shutoutB} shutouts ({shutoutB/n:0.1%} of all games).")
 
 
 def main():
     printIntro()
     probA, probB, n = getInputs()
-    winsA, winsB, multiWinA, multiWinB = simNGames (n, probA, probB)
+    winsA, winsB, multiWinA, multiWinB, shutoutA, shutoutB = simNGames (n, probA, probB)
     bestOfNGames = simBestOfGames(n, winsA, winsB)
     
-    printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames)
+    printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames, shutoutA, shutoutB)
 
 
 
