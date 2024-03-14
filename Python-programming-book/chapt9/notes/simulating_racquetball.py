@@ -45,9 +45,9 @@ def printIntro():
 
 def getInputs():
     # Returns the three simulation parameters probA, probB and n
-    a = 0.75 #float(input("What is the prob. player A wins a serve? "))
-    b = 0.75 #float(input("What is the prob. player B wins a serve? "))
-    n = 10 #int(input("How many games to simulate? "))
+    a = 0.65 #float(input("What is the prob. player A wins a serve? "))
+    b = 0.70 #float(input("What is the prob. player B wins a serve? "))
+    n = 100 #int(input("How many games to simulate? "))
     return a, b, n
 
 def gameOver(a, b):
@@ -69,7 +69,6 @@ def simOneGame(firstServe, probA, probB):
                 scoreB = scoreB + 1
             else:
                 serving = "A"
-    
     return scoreA, scoreB
     
 
@@ -77,6 +76,11 @@ def simNGames(n, probA, probB):
     # Simulates n games and returns winsA and winsB
     winsA = 0
     winsB = 0
+    wins_requires = 3
+    consecutive_winsA = 0
+    consecutive_winsB = 0
+    multiwinA = 0
+    multiwinB = 0
     if n % 2 == 0:
         firstServe = "A"
     else:
@@ -85,85 +89,31 @@ def simNGames(n, probA, probB):
         scoreA, scoreB = simOneGame(firstServe, probA, probB)
         if scoreA > scoreB:
             winsA = winsA + 1
-        else:
-            winsB = winsB + 1
-    return winsA, winsB
-
-
-def simMultiGame(n, winsA, winsB):
-    # simulates n games and returns multiWinA and multiWinB
-    multiWinA = 0
-    multiWinB = 0
-    wins_required = 3
-    consecutive_winsA = 0
-    consecutive_winsB = 0
-    if n % 2 == 0:
-        firstServe = "A"
-    else:
-        firstServe = "B"
-
-    for i in range(n):
-        scoreA, scoreB = simOneGame(firstServe, winsA, winsB)
-        if scoreA > scoreB:
             consecutive_winsA = consecutive_winsA + 1
             consecutive_winsB = 0
-            if consecutive_winsA == wins_required:
-                multiWinA = multiWinA + 1
+            if consecutive_winsA == wins_requires:
+                multiwinA = multiwinA + 1
                 consecutive_winsA = 0
-        elif scoreB > scoreA:
+        else:
+            winsB = winsB + 1
             consecutive_winsB = consecutive_winsB + 1
             consecutive_winsA = 0
-            if consecutive_winsB == wins_required:
-                multiWinB = multiWinB + 1
+            if consecutive_winsB == wins_requires:
+                multiwinB = multiwinB + 1
                 consecutive_winsB = 0
-    return multiWinA, multiWinB
+    return winsA, winsB, multiwinA, multiwinB
 
 
-'''
-best of n game matches.
-first service alternates, so player A servers first in odd games of the match, 
-and player B servers first in the even games.
-
-'''
 def simBestOfGames(n, winsA, winsB):
-    # simulates n games and returns winner as best of "n" games
-    winner = ""
-    wins_required = n//2+1
-    consecutive_winsA = 0
-    consecutive_winsB = 0
+    winsRequired = n/2 + 1
+    if winsA >= winsRequired:
+        return "A"
+    elif winsB >= winsRequired:
+        return "B"
+    else:
+        return False
 
-    for i in range(n):
-        if i % 2 == 0:
-            evenOdd = 1
-        else:
-            evenOdd = 2
-        scoreA, scoreB = simNGames(evenOdd, winsA, winsB)
-        if scoreA > scoreB:
-            consecutive_winsA = consecutive_winsA + 1
-            if consecutive_winsA == wins_required:
-                winner = "A"
-        elif scoreB > scoreA:
-            consecutive_winsB = consecutive_winsB + 1
-            if consecutive_winsB == wins_required:
-                winner = "B"
-   
-    # checks if there are no winners of best of n games and continues to play until one player reaches wins_required
-    if winner == '':
-        while consecutive_winsB != wins_required and consecutive_winsA != wins_required:
-            evenOdd = evenOdd + 1
-            scoreA, scoreB = simNGames(evenOdd, winsA, winsB)
-            if scoreA > scoreB:
-                consecutive_winsA = consecutive_winsA + 1
-                if consecutive_winsA == wins_required:
-                    winner = "A"
-            elif scoreB > scoreA:
-                consecutive_winsB = consecutive_winsB + 1
-                if consecutive_winsB == wins_required:
-                    winner = "B"
-    games_played_best_off = consecutive_winsA + consecutive_winsB    
-    return winner, games_played_best_off
-
-def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfGames, games_played_best_off):
+def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames):
     # Prints a summary of wins for each player.
     n = winsA + winsB
     print(f"\nGames simulated: {n}")
@@ -174,19 +124,19 @@ def printSummary(winsA, winsB, multiWinA, multiWinB, bestOfGames, games_played_b
     print(f'Possibility for 3 wins in a row for A: {multiWinA/n:0.1%}')
     print(f'3 wins in a row for B: {multiWinB}')
     print(f'Possibility for 3 wins in a row for A: {multiWinB/n:0.1%}')
-
-    print(f"\nPlayer {bestOfGames} wins best of {n} games with at least {n//2+1} games won.")
-    print(f"This is because players kept playing until one player reached the best of score")
+    if bestOfNGames == False:
+        pass
+    else:
+        print(f"\nPlayer {bestOfNGames} wins best of {n} games with at least {n//2+1} games won.")
 
 
 def main():
     printIntro()
     probA, probB, n = getInputs()
-    winsA, winsB = simNGames (n, probA, probB)
-    multiWinA, multiWinB = simMultiGame(n, probA, probB)
-    bestOfGames, games_played_best_off = simBestOfGames(n, probA, probB)
+    winsA, winsB, multiWinA, multiWinB = simNGames (n, probA, probB)
+    bestOfNGames = simBestOfGames(n, winsA, winsB)
     
-    printSummary(winsA, winsB, multiWinA, multiWinB, bestOfGames, games_played_best_off)
+    printSummary(winsA, winsB, multiWinA, multiWinB, bestOfNGames)
 
 
 
