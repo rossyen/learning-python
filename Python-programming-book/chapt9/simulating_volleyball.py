@@ -50,7 +50,6 @@ def simOneGame(firstServe, probA, probB):
                 scoreB = scoreB + 1
             else:
                 serving = "A"
-    print(f"A: {scoreA} | B: {scoreB}")
     return scoreA, scoreB
 
 def gameOver(a, b):
