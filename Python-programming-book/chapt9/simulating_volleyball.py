@@ -13,9 +13,9 @@ def printInto():
     print("\n")
 
 def getInputS():
-    n = 10
-    probA = 0.6
-    probB = 0.6
+    n = 500
+    probA = 0.65
+    probB = 0.65
 
     return probA, probB, n
 
@@ -55,9 +55,11 @@ def simOneGame(firstServe, probA, probB):
 
 def gameOver(a, b):
     if a >= 15 or b >=15:
-        if a == b + 2 or b == a + 2:
+        if a == b + 1 or b == a + 1:
             return False
-        else:
+        elif a == b:
+            return False
+        else: 
             return True
 
 
