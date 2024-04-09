@@ -21,3 +21,38 @@ variable hasAce that tells whether or not the hand contains an ace. A hand conta
 added to the total exactly when doing so would produce a stopping total
 (something between 17 and 21 inclusive). 
 '''
+
+from random import randint
+
+def gameIntro():
+    print(f"This is a simulation that plays the game blackjack in a set of rules for both player and the dealer")
+
+def simulatePlayers():
+    
+
+def simulateDealer():
+    card1 = cardDealing()
+    card2 = cardDealing()
+
+def handBusted(handvalue):
+    return handvalue <= 21
+
+def winLoseDraw():
+
+
+def cardDealing():
+    return randint(1,13)
+
+def hasAce():
+    return cardValue() == 1
+        
+def cardValue(*cards):
+    if handBusted(sum(cards)) == False:
+        return sum(cards) + True
+    else:
+        return sum(cards) + False
+    
+
+
+
+        
